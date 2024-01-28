@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,7 +29,7 @@ public class CityService {
   }
 
   @Transactional
-  public CityDTO saveCity(CityDTO cityDTO) {
+  public CityDTO saveCity(final CityDTO cityDTO) {
     final City city = cityRepository.save(City.builder()
         .name(cityDTO.getName())
         .build());
@@ -38,4 +39,9 @@ public class CityService {
         .name(city.getName())
         .build();
   }
+
+  public City findCityById(final Long cityId) {
+    return cityRepository.getOne(cityId);
+  }
+
 }
