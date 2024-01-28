@@ -5,6 +5,7 @@ import com.devsuperior.bds04.entities.City;
 import com.devsuperior.bds04.repositories.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,5 +24,17 @@ public class CityService {
             .name(city.getName())
             .build())
         .collect(Collectors.toList());
+  }
+
+  @Transactional
+  public CityDTO saveCity(CityDTO cityDTO) {
+    final City city = cityRepository.save(City.builder()
+        .name(cityDTO.getName())
+        .build());
+
+    return CityDTO.builder()
+        .id(city.getId())
+        .name(city.getName())
+        .build();
   }
 }
