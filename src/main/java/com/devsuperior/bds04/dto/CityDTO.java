@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import com.devsuperior.bds04.entities.City;
 
+import lombok.Builder;
+
+@Builder
 public class CityDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
