@@ -1,6 +1,6 @@
 package com.devsuperior.bds04.config;
 
-import com.devsuperior.bds04.service.UserService;
+import com.devsuperior.bds04.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +22,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   private UserService userService;
 
   @Override
+  @Bean
+  protected AuthenticationManager authenticationManager() throws Exception {
+    return super.authenticationManager();
+  }
+
+  @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.userDetailsService(userService)
         .passwordEncoder(passwordEncoder);
@@ -30,11 +36,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   public void configure(WebSecurity web) throws Exception {
     web.ignoring().antMatchers("/actuator/**");
-  }
-
-  @Override
-  @Bean
-  protected AuthenticationManager authenticationManager() throws Exception {
-    return super.authenticationManager();
   }
 }

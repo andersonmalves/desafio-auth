@@ -1,7 +1,7 @@
 package com.devsuperior.bds04.components;
 
 import com.devsuperior.bds04.entities.User;
-import com.devsuperior.bds04.repository.UserRepository;
+import com.devsuperior.bds04.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
