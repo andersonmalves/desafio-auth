@@ -4,6 +4,7 @@ import com.devsuperior.bds04.dto.CityDTO;
 import com.devsuperior.bds04.entities.City;
 import com.devsuperior.bds04.repositories.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +18,7 @@ public class CityService {
   private CityRepository cityRepository;
 
   public List<CityDTO> findAllCities() {
-    final List<City> list = cityRepository.findAll();
+    final List<City> list = cityRepository.findAll(Sort.by("name"));
     return list.stream()
         .map(city -> CityDTO.builder()
             .id(city.getId())
