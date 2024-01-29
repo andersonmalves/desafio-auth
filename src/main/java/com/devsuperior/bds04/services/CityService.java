@@ -1,6 +1,7 @@
 package com.devsuperior.bds04.services;
 
 import com.devsuperior.bds04.dto.CityDTO;
+import com.devsuperior.bds04.dto.mapper.CityMapper;
 import com.devsuperior.bds04.entities.City;
 import com.devsuperior.bds04.repositories.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,9 @@ public class CityService {
 
   @Transactional
   public CityDTO saveCity(final CityDTO cityDTO) {
-    final City city = cityRepository.save(City.builder()
-        .name(cityDTO.getName())
-        .build());
+    final City city = cityRepository.save(CityMapper.toEntity(cityDTO));
 
-    return CityDTO.builder()
-        .id(city.getId())
-        .name(city.getName())
-        .build();
+    return CityMapper.toDTO(city);
   }
 
   public City findCityById(final Long cityId) {
