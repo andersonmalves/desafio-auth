@@ -16,6 +16,8 @@ public class EventMapper {
         .build();
   }
 
+
+
   public static Event toEntity(final EventDTO eventDTO, final City city) {
     return Event.builder()
         .id(eventDTO.getId())
