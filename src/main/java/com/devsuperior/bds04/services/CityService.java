@@ -21,11 +21,9 @@ public class CityService {
 
   public List<CityDTO> findAllCities() {
     final List<City> list = cityRepository.findAll(Sort.by("name"));
+    
     return list.stream()
-        .map(city -> CityDTO.builder()
-            .id(city.getId())
-            .name(city.getName())
-            .build())
+        .map(CityMapper::toDTO)
         .collect(Collectors.toList());
   }
 
