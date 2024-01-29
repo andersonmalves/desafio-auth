@@ -1,6 +1,8 @@
 package com.devsuperior.bds04.services;
 
 import com.devsuperior.bds04.dto.EventDTO;
+import com.devsuperior.bds04.dto.mapper.EventMapper;
+import com.devsuperior.bds04.entities.City;
 import com.devsuperior.bds04.entities.Event;
 import com.devsuperior.bds04.repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,30 +24,13 @@ public class EventService {
   public List<EventDTO> findAllEvents() {
     final List<Event> list = eventRepository.findAll();
 
-    return list.stream().map(event -> EventDTO.builder()
-        .id(event.getId())
-        .name(event.getName())
-        .url(event.getUrl())
-        .date(event.getDate())
-        .cityId(event.getCity().getId())
-        .build()).collect(Collectors.toList());
+    return list.stream().map(EventMapper::toDto).collect(Collectors.toList());
   }
 
   public EventDTO saveEvent(final EventDTO eventDTO) {
-    final Event event = eventRepository.save(Event.builder()
-        .id(eventDTO.getId())
-        .name(eventDTO.getName())
-        .city(cityService.findCityById(eventDTO.getCityId()))
-        .date(eventDTO.getDate())
-        .url(eventDTO.getUrl())
-        .build());
+    final City city = cityService.findCityById(eventDTO.getCityId());
+    final Event event = eventRepository.save(EventMapper.toEntity(eventDTO, city));
 
-    return EventDTO.builder()
-        .id(event.getId())
-        .name(event.getName())
-        .cityId(event.getCity().getId())
-        .date(event.getDate())
-        .url(event.getUrl())
-        .build();
+    return EventMapper.toDto(event);
   }
 }
